@@ -29,7 +29,7 @@ const createPhotoComment = (index) => ({
 
 const createPhoto = (index) => ({
   id: index,
-  url: `photos/${index}.png`,
+  url: `photos/${index}.jpg`,
   description: getRandomArrayElement(photoDescriptionArray),
   likes: getRandomPositiveInteger(15, 200),
   comments: Array.from(
