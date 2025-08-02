@@ -1,3 +1,5 @@
+import { isEscapeKey } from './utils.js';
+
 const bigPhotoElement = document.querySelector('.big-picture');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
 const commentsList = document.querySelector('.social__comments');
@@ -33,11 +35,11 @@ const renderComments = (comments) => {
 const hideBigPhoto = () => {
   bigPhotoElement.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscKeyDown);
+  document.removeEventListener('keydown', onBigPhotoEscKeyDown);
 };
 
-function onEscKeyDown (evt) {
-  if (evt.keyCode === 27) {
+function onBigPhotoEscKeyDown (evt) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideBigPhoto();
   }
@@ -60,7 +62,7 @@ const showBigPhoto = (data) => {
   body.classList.add('modal-open');
   commentsLoader.classList.add('hidden');
   commentCount.classList.add('hidden');
-  document.addEventListener('keydown', onEscKeyDown);
+  document.addEventListener('keydown', onBigPhotoEscKeyDown);
 
   renderBigPhoto(data);
   renderComments(data.comments);
