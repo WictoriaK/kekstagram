@@ -100,9 +100,9 @@ const onFormSubmit = (evt) => {
   const isValid =  pristine.validate();
 
   if(isValid) {
-    console.log('good');
+    // console.log('good');
   } else {
-    console.log('bad');
+    // console.log('bad');
   }
 
 };
