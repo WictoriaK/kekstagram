@@ -161,4 +161,4 @@ const initSliderEffect = () => {
 };
 
 
-export  {initSliderEffect, resetSliderEffect}
+export  {initSliderEffect, resetSliderEffect};
