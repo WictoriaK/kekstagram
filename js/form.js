@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-// import {initEffect, resetEffect} from './photo-effects.js';
+import { initSliderEffect, resetSliderEffect} from './photo-effects.js';
 import {resetScaleImage} from './photo-scale.js';
 
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -57,7 +57,7 @@ const hideUploadOverlay = () => {
   editPhotoElement.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
-  resetEffect();
+  resetSliderEffect();
   resetScaleImage();
 };
 
@@ -115,4 +115,4 @@ const onFormSubmit = (evt) => {
 uploadPhotoElement.addEventListener('change', uploadNewPhoto);
 cancelPhotoUpload.addEventListener('click', onCloseUploadBtn);
 photoUploadFormElement.addEventListener('submit', onFormSubmit);
-// initEffect();
+initSliderEffect();
