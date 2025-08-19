@@ -538,12 +538,12 @@ main {
   font-size: 12px;
   line-height: 42px;
   text-align: center;
-  color: #ffffff;
+  /*color: #ffffff;*/
   white-space: nowrap;
 
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 33px;
-
+  /*background-color: rgba(0, 0, 0, 0.6);*/
+  /*border-radius: 33px;*/
+border: none;
   -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
