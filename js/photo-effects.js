@@ -146,9 +146,9 @@ const setPhotoEffect = (effect) => {
   setImageEffect();
 };
 
-const resetSlider = () => {
-  setPhotoEffect(styleEffect.DEFAULT);
-};
+// const resetSlider = () => {
+//   setPhotoEffect(styleEffect.DEFAULT);
+// };
 
 const onPhotoEffectChange = (evt) => {
   imageUploadPreview.className = '';
