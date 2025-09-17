@@ -1,6 +1,8 @@
-import { isEscapeKey } from './utils.js';
-import { initSliderEffect, resetSliderEffect} from './photo-effects.js';
+import {isEscapeKey} from './utils.js';
+import {initSliderEffect, resetSliderEffect} from './photo-effects.js';
 import {resetScaleImage} from './photo-scale.js';
+import {sendData} from './api.js';
+import {showErrorAlert, showSuccessAlert} from './api-messages.js';
 
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_LENGTH = 20;
@@ -20,6 +22,7 @@ const commentTextField = document.querySelector('.text__description');
 const editPhotoElement = photoUploadFormElement.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const cancelPhotoUpload = photoUploadFormElement.querySelector('#upload-cancel');
+const submitBtn = photoUploadFormElement.querySelector('.img-upload__submit');
 
 
 const isFocused = () => document.activeElement === hashtagField || document.activeElement === commentTextField;
@@ -54,11 +57,12 @@ const uploadNewPhoto = () => {
 const hideUploadOverlay = () => {
   photoUploadFormElement.reset();
   pristine.reset();
+  resetSliderEffect();
+  resetScaleImage();
   editPhotoElement.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
-  resetSliderEffect();
-  resetScaleImage();
+
 };
 
 const onCloseUploadBtn = () => {
@@ -99,20 +103,47 @@ pristine.addValidator(
   true
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid =  pristine.validate();
+const blockSubmitBtn = () => {
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Опубликовываю...';
+};
 
-  if(isValid) {
-    // console.log('good');
-  } else {
-    // console.log('bad');
-  }
+const unblockSubmitBtn = () => {
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Опубликовать';
+};
 
+const onFormSubmit = () => {
+  photoUploadFormElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+
+    if(isValid) {
+      blockSubmitBtn();
+      sendData(
+        () => {
+          hideUploadOverlay();
+          showSuccessAlert();
+          unblockSubmitBtn();
+        },
+        () => {
+          hideUploadOverlay();
+          showErrorAlert();
+          unblockSubmitBtn();
+        },
+        new FormData(evt.target)
+      );
+    }
+  });
 };
 
 
 uploadPhotoElement.addEventListener('change', uploadNewPhoto);
 cancelPhotoUpload.addEventListener('click', onCloseUploadBtn);
-photoUploadFormElement.addEventListener('submit', onFormSubmit);
+
 initSliderEffect();
+
+
+export {onFormSubmit, hideUploadOverlay};
+
